@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{ email: string; password: string }>(event)
@@ -43,5 +44,19 @@ export default defineEventHandler(async (event) => {
       salt: salt
     }
   })
-  return { id: user.id, email: user.email, createdAt: user.createdAt }
+  //create JWT token
+  const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, {
+    expiresIn: '7d'
+  })
+
+  //set cookie
+  setCookie(event, 'auth_token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 // 7 days
+  })
+
+  console.log(token)
+  return { id: user.id, email: user.email, createdAt: user.createdAt, token: token }
 })

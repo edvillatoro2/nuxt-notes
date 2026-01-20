@@ -1,73 +1,73 @@
 <template>
-  <div class="flex h-screen">
-    <div class="flex flex-col justify-center gap-4 w-1/3 p-8 bg-gray-200">
-      <!-- duplicateError message -->
+  <!-- <div class="flex h-screen"> -->
+  <div class="flex h-screen flex-col justify-center gap-4 p-8 bg-[#EEE5E9] text-white">
+    <!-- duplicateError message -->
 
-      <div v-if="duplicateError" class="text-red-600 text-2xl font-semibold">
-        {{ duplicateError }}
+    <div v-if="duplicateError" class="text-red-600 text-2xl font-semibold">
+      {{ duplicateError }}
+    </div>
+
+    <!-- successMessage message -->
+
+    <div v-if="successMessage" class="text-green-600 text-2xl font-semibold">
+      {{ successMessage }}
+    </div>
+
+    <!-- register form -->
+    <h1 class="text-4xl font-bold capitalize bg-black p-2">register</h1>
+    <h4 class="font-semibold text-lg bg-black p-2">sign up for free account</h4>
+    <p class="bg-black p-2">
+      already registered?
+      <NuxtLink
+        class="font-semibold text-[#FF2E00] underline cursor-pointer hover:text-[#ff2f00a9]"
+        to="/login"
+      >
+        login
+      </NuxtLink>
+      to your account
+    </p>
+    <!-- inputs -->
+    <form @submit.prevent="submit" class="gap-8 flex flex-col">
+      <div class="flex flex-col gap-2">
+        <div v-if="emailError" class="bg-red-400 p-2 flex justify-center rounded">
+          <p class="text-red-900 font-semibold">{{ emailError }}</p>
+        </div>
+        <label for="email" class="block font-medium bg-black p-2">Email Address</label>
+        <input
+          v-model="email"
+          type="email"
+          placeholder="example@email.com"
+          class="block p-3 rounded border border-gray-300"
+          :class="emailError ? 'border-red-500 bg-red-200' : ''"
+        />
       </div>
-
-      <!-- successMessage message -->
-
-      <div v-if="successMessage" class="text-green-600 text-2xl font-semibold">
-        {{ successMessage }}
+      <div class="flex flex-col gap-2">
+        <div v-if="passwordError" class="bg-red-400 p-2 flex justify-center rounded">
+          <p class="text-red-900 font-semibold">{{ passwordError }}</p>
+        </div>
+        <label for="password" class="font-medium bg-black p-2">Password</label>
+        <input
+          v-model="password"
+          type="password"
+          placeholder="Password"
+          class="block p-3 rounded border border-gray-300"
+          :class="passwordError ? 'border-red-500 bg-red-200' : ''"
+        />
       </div>
-
-      <!-- register form -->
-      <h1 class="text-4xl font-bold">register Page</h1>
-      <h4 class="font-semibold text-lg">sign up for free account</h4>
-      <p>
-        already registered?
-        <NuxtLink
-          class="font-semibold text-[#FF2E00] underline cursor-pointer hover:text-[#ff2f00a9]"
-          to="/login"
+      <!-- sign up button -->
+      <div>
+        <button
+          class="bg-[#CF5C36] hover:bg-[#cf5c36b4] hover:cursor-pointer text-white font-bold py-2 px-4 rounded"
         >
-          login
-        </NuxtLink>
-        to your account
-      </p>
-      <!-- inputs -->
-      <form @submit.prevent="submit" class="gap-8 flex flex-col">
-        <div class="flex flex-col gap-2">
-          <div v-if="emailError" class="bg-red-400 p-2 flex justify-center rounded">
-            <p class="text-red-900 font-semibold">{{ emailError }}</p>
-          </div>
-          <label for="email" class="block font-medium">Email Address</label>
-          <input
-            v-model="email"
-            type="email"
-            placeholder="example@email.com"
-            class="block p-3 rounded border border-gray-300"
-            :class="emailError ? 'border-red-500 bg-red-200' : ''"
-          />
-        </div>
-        <div class="flex flex-col gap-2">
-          <div v-if="passwordError" class="bg-red-400 p-2 flex justify-center rounded">
-            <p class="text-red-900 font-semibold">{{ passwordError }}</p>
-          </div>
-          <label for="password" class="block font-medium">Password</label>
-          <input
-            v-model="password"
-            type="password"
-            placeholder="Password"
-            class="block p-3 rounded border border-gray-300"
-            :class="passwordError ? 'border-red-500 bg-red-200' : ''"
-          />
-        </div>
-        <!-- sign up button -->
-        <div>
-          <button
-            class="bg-[#297373] hover:bg-[#297373c1] hover:cursor-pointer text-white font-bold py-2 px-4 rounded"
-          >
-            Sign Up
-          </button>
-        </div>
-      </form>
-    </div>
-    <div class="w-2/3">
-      <div class="font-semibold text-lg">test</div>
-    </div>
+          Sign Up
+        </button>
+      </div>
+    </form>
   </div>
+  <!-- <div class="w-3/4">
+      <div class="font-semibold text-lg">test</div>
+    </div> -->
+  <!-- </div> -->
 </template>
 
 <script setup lang="ts">
@@ -111,7 +111,7 @@ const submit = async (e: Event) => {
     successMessage.value = 'Registration successful! Redirecting to login...'
     //wait for 2 seconds and redirect to login page
     setTimeout(async () => {
-      await navigateTo('/login')
+      await navigateTo('/')
     }, 2000)
   } catch (err: any) {
     const messge = err.data?.statusMessage || 'An error occurred'

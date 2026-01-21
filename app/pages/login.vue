@@ -105,9 +105,9 @@ const submit = async (e: Event) => {
       }
     })
     successMessage.value = 'Login successful!'
-    //wait for 2 seconds and redirect to home page
+    // Small delay then navigate
     setTimeout(() => {
-      window.location.href = '/'
+      navigateTo('/')
     }, 2000)
   } catch (err: any) {
     const messge = err.data?.statusMessage || 'An error occurred'

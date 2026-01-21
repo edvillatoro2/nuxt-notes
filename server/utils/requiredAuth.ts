@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-export default defineEventHandler(async (event) => {
+export function requireAuth(event: any) {
   // get token from cookies
   const token = getCookie(event, 'auth_token')
 
@@ -16,21 +16,11 @@ export default defineEventHandler(async (event) => {
       userId: string
       email: string
     }
-    // get authenticated user's notes
-    const notes = await prisma.note.findMany({
-      where: {
-        // filter by userId from token
-        userId: decoded.userId
-      },
-      orderBy: {
-        updatedAt: 'desc'
-      }
-    })
-    return notes
+    return decoded
   } catch (err) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Invalid token'
     })
   }
-})
+}

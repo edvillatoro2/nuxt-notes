@@ -9,13 +9,13 @@
         -webkit-backdrop-filter: blur(9.3px);
         border: 1px solid rgba(255, 255, 255, 0.81);
       "
-      class="fixed top-0 right-0 z-10 m-4"
+      class="fixed top-0 right-0 z-10 m-2"
     >
       <nav>
         <ul class="flex justify-end gap-4 p-4">
-          <li class="hover:text-amber-200"><NuxtLink to="/">Home</NuxtLink></li>
-          <li class="hover:text-amber-200"><NuxtLink to="/register">Register</NuxtLink></li>
-          <li class="hover:text-amber-200"><NuxtLink to="/login">Login</NuxtLink></li>
+          <li class="hover:text-amber-500"><NuxtLink to="/">Home</NuxtLink></li>
+          <li class="hover:text-amber-500"><NuxtLink to="/register">Register</NuxtLink></li>
+          <li class="hover:text-amber-500"><NuxtLink to="/login">Login</NuxtLink></li>
         </ul>
       </nav>
     </header>

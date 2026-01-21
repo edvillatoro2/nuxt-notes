@@ -1,6 +1,6 @@
 <template>
   <!-- <div class="flex h-screen"> -->
-  <div class="flex h-screen flex-col justify-center gap-4 p-8 bg-[#EEE5E9] text-white">
+  <div class="flex h-screen flex-col justify-center relative gap-4 p-8 bg-[#EEE5E9] text-white">
     <!-- duplicateError message -->
 
     <div v-if="duplicateError" class="text-red-600 text-2xl font-semibold">
@@ -13,19 +13,21 @@
       {{ successMessage }}
     </div>
 
-    <!-- register form -->
-    <h1 class="text-4xl font-bold capitalize bg-black p-2">register</h1>
-    <h4 class="font-semibold text-lg bg-black p-2">sign up for free account</h4>
-    <p class="bg-black p-2">
+    <p class="bg-red-400 border-2 border-red-700 p-2 absolute top-32 capitalize">
       already registered?
       <NuxtLink
-        class="font-semibold text-[#FF2E00] underline cursor-pointer hover:text-[#ff2f00a9]"
+        class="font-semibold text-[#99ff00] underline cursor-pointer hover:text-[#00ff44a9]"
         to="/login"
       >
         login
       </NuxtLink>
       to your account
     </p>
+
+    <!-- register form -->
+    <h1 class="text-4xl font-bold capitalize bg-black p-2">register</h1>
+    <h4 class="font-semibold text-lg bg-black p-2">sign up for free account</h4>
+
     <!-- inputs -->
     <form @submit.prevent="submit" class="gap-8 flex flex-col">
       <div class="flex flex-col gap-2">

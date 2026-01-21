@@ -11,7 +11,7 @@
         </ul>
       </div>
     </div>
-    <div class="w-2/3 py-4 px-1.5">
+    <div class="w-2/3 py-20 px-1.5">
       <div class="flex justify-between">
         <div class="capitalize font-semibold text-sm">
           <Icon name="fluent-emoji-flat:pencil" style="color: black" size="24" />

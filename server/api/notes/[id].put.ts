@@ -7,9 +7,7 @@ export default defineEventHandler(async (e) => {
     // Find the note by id
     where: { id: id },
     // Update it with new data (title, content)
-    data: {
-      body
-    }
+    data: body
   })
   // Return updated note
   return note

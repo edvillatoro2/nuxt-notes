@@ -105,7 +105,11 @@ const submit = async (e: Event) => {
       }
     })
     successMessage.value = 'Login successful!'
+<<<<<<< HEAD
     //wait for 2 seconds and redirect to home page
+=======
+    // Small delay then navigate
+>>>>>>> ce1d4504fdc2bcd708e28eee17510c28ba8ad897
     setTimeout(() => {
       navigateTo('/')
     }, 2000)

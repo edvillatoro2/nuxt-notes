@@ -1,10 +1,14 @@
 <template>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dbd522f (working token on SSR and CSR)
   <div>
     <NuxtPage />
   </div>
 </template>
 <script setup lang="ts">
+<<<<<<< HEAD
 const route = useRoute()
 </script>
 =======
@@ -32,3 +36,11 @@ const route = useRoute()
   </div>
 </template>
 >>>>>>> ce1d4504fdc2bcd708e28eee17510c28ba8ad897
+=======
+const { fetchUser } = useAuth()
+
+onMounted(() => {
+  fetchUser()
+})
+</script>
+>>>>>>> dbd522f (working token on SSR and CSR)

@@ -54,31 +54,6 @@ export default defineEventHandler(async (event) => {
     }
   })
   //create JWT token
-<<<<<<< HEAD
-  const token = jwt.sign(
-    {
-      userId: user.id,
-      email: user.email
-    },
-    process.env.JWT_SECRET as string,
-    {
-      expiresIn: '7d'
-    }
-  )
-  //set cookie
-  setCookie(event, 'auth_token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-    sameSite: 'lax'
-  })
-  return {
-    id: user.id,
-    email: user.email,
-    createdAt: user.createdAt,
-    token: token
-  }
-=======
   const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, {
     expiresIn: '7d'
   })
@@ -93,5 +68,4 @@ export default defineEventHandler(async (event) => {
 
   console.log(token)
   return { id: user.id, email: user.email, createdAt: user.createdAt, token: token }
->>>>>>> dbd522f (working token on SSR and CSR)
 })

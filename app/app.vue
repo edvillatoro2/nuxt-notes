@@ -12,9 +12,3 @@ onMounted(() => {
   fetchUser()
 })
 </script>
-const { fetchUser } = useAuth()
-
-onMounted(() => {
-  fetchUser()
-})
-</script>

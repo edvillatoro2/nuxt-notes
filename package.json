@@ -12,15 +12,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "@nuxt/icon": "^2.2.1",
-=======
-    "@nuxt/icon": "^2.2.0",
->>>>>>> ce1d4504fdc2bcd708e28eee17510c28ba8ad897
-=======
-    "@nuxt/icon": "^2.2.1",
->>>>>>> dbd522f (working token on SSR and CSR)
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "@tailwindcss/vite": "^4.1.18",

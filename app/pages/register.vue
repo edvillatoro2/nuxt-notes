@@ -36,10 +36,19 @@
         </div>
         <label for="email" class="block font-medium bg-black p-2">Email Address</label>
         <input
+<<<<<<< HEAD
           v-model="email"
           type="email"
           placeholder="example@email.com"
           class="block p-3 rounded border border-gray-300"
+=======
+          id="email"
+          v-model="email"
+          type="email"
+          name="email"
+          placeholder="example@email.com"
+          class="block p-3 text-black bg-white rounded border border-gray-300"
+>>>>>>> dbd522f (working token on SSR and CSR)
           :class="emailError ? 'border-red-500 bg-red-200' : ''"
         />
       </div>
@@ -49,10 +58,19 @@
         </div>
         <label for="password" class="font-medium bg-black p-2">Password</label>
         <input
+<<<<<<< HEAD
           v-model="password"
           type="password"
           placeholder="Password"
           class="block p-3 rounded border border-gray-300"
+=======
+          id="password"
+          v-model="password"
+          type="password"
+          name="password"
+          placeholder="Password"
+          class="block p-3 text-black bg-white rounded border border-gray-300"
+>>>>>>> dbd522f (working token on SSR and CSR)
           :class="passwordError ? 'border-red-500 bg-red-200' : ''"
         />
       </div>
@@ -80,49 +98,51 @@ const emailError = ref('')
 const passwordError = ref('')
 const successMessage = ref('')
 
-const submit = async (e: Event) => {
-  e.preventDefault()
+const submit = async () => {
   duplicateError.value = ''
   emailError.value = ''
   passwordError.value = ''
   successMessage.value = ''
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-  if (!email.value || !emailRegex.test(email.value.trim())) {
+  if (!email.value || !emailRegex.test(email.value)) {
     emailError.value = 'Please enter a valid email address.'
     return
   }
-  if (!password.value) {
-    passwordError.value = 'Password is required'
-    return
-  }
+
   if (password.value.length < 8) {
     passwordError.value = 'Password must be at least 8 characters long'
     return
   }
 
   try {
-    const res = await $fetch('/api/auth/register', {
+    await $fetch('/api/auth/register', {
       method: 'POST',
       body: {
         email: email.value,
         password: password.value
       }
     })
+<<<<<<< HEAD
     successMessage.value = 'Registration successful! Redirecting home page...'
     //wait for 2 seconds and redirect to login page
     setTimeout(async () => {
       await navigateTo('/')
     }, 2000)
+=======
+
+    successMessage.value = 'Registration successful!'
+    await navigateTo('/', { replace: true })
+>>>>>>> dbd522f (working token on SSR and CSR)
   } catch (err: any) {
-    const messge = err.data?.statusMessage || 'An error occurred'
-    if (messge.toLowerCase().includes('email')) {
-      emailError.value = messge
-    } else if (messge.toLowerCase().includes('password')) {
-      passwordError.value = messge
+    const message = err.data?.statusMessage || 'An error occurred'
+    if (message.toLowerCase().includes('email')) {
+      emailError.value = message
+    } else if (message.toLowerCase().includes('password')) {
+      passwordError.value = message
     } else {
-      duplicateError.value = messge
+      duplicateError.value = message
     }
   }
 }

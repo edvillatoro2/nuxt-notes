@@ -2,6 +2,9 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
+  runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
@@ -10,6 +13,9 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()]
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dbd522f (working token on SSR and CSR)
   modules: ['@nuxt/icon']
 })
 =======

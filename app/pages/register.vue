@@ -36,19 +36,12 @@
         </div>
         <label for="email" class="block font-medium bg-black p-2">Email Address</label>
         <input
-<<<<<<< HEAD
-          v-model="email"
-          type="email"
-          placeholder="example@email.com"
-          class="block p-3 rounded border border-gray-300"
-=======
           id="email"
           v-model="email"
           type="email"
           name="email"
           placeholder="example@email.com"
           class="block p-3 text-black bg-white rounded border border-gray-300"
->>>>>>> dbd522f (working token on SSR and CSR)
           :class="emailError ? 'border-red-500 bg-red-200' : ''"
         />
       </div>
@@ -58,19 +51,12 @@
         </div>
         <label for="password" class="font-medium bg-black p-2">Password</label>
         <input
-<<<<<<< HEAD
-          v-model="password"
-          type="password"
-          placeholder="Password"
-          class="block p-3 rounded border border-gray-300"
-=======
           id="password"
           v-model="password"
           type="password"
           name="password"
           placeholder="Password"
           class="block p-3 text-black bg-white rounded border border-gray-300"
->>>>>>> dbd522f (working token on SSR and CSR)
           :class="passwordError ? 'border-red-500 bg-red-200' : ''"
         />
       </div>
@@ -124,17 +110,9 @@ const submit = async () => {
         password: password.value
       }
     })
-<<<<<<< HEAD
-    successMessage.value = 'Registration successful! Redirecting home page...'
-    //wait for 2 seconds and redirect to login page
-    setTimeout(async () => {
-      await navigateTo('/')
-    }, 2000)
-=======
 
     successMessage.value = 'Registration successful!'
     await navigateTo('/', { replace: true })
->>>>>>> dbd522f (working token on SSR and CSR)
   } catch (err: any) {
     const message = err.data?.statusMessage || 'An error occurred'
     if (message.toLowerCase().includes('email')) {

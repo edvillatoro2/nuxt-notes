@@ -1,9 +1,7 @@
-import { requiredAuth } from '../../utils/requiredAuth'
+import { requireAuth } from '../../utils/requiredAuth'
 
 export default defineEventHandler(async (event) => {
-  await requiredAuth(event)
-
-  const userId = event.context.auth.userId
+  const { userId } = await requireAuth(event)
 
   const user = await prisma.user.findUnique({
     where: { id: userId },

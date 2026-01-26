@@ -12,14 +12,5 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> dbd522f (working token on SSR and CSR)
   modules: ['@nuxt/icon']
 })
-=======
-
-  modules: ['@nuxt/icon']
-})
->>>>>>> ce1d4504fdc2bcd708e28eee17510c28ba8ad897

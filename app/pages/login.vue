@@ -17,7 +17,7 @@
     <p class="capitalize">
       dont have an account?
       <NuxtLink
-        class="font-semibold text-[#FF2E00] underline cursor-pointer hover:text-[#ff2f00a9]"
+        class="font-semibold text-[#99ff00] underline cursor-pointer hover:text-[#00ff44a9]"
         to="/register"
       >
         Register
@@ -39,7 +39,7 @@
           type="email"
           name="email"
           placeholder="example@email.com"
-          class="block p-3 rounded border border-gray-300"
+          class="block text-black bg-white p-3 rounded border border-gray-300"
           :class="emailError ? 'border-red-500 bg-red-200' : ''"
         />
       </div>
@@ -57,7 +57,7 @@
           type="password"
           name="password"
           placeholder="Password"
-          class="block p-3 rounded border border-gray-300"
+          class="block text-black bg-white p-3 rounded border border-gray-300"
           :class="passwordError ? 'border-red-500 bg-red-200' : ''"
         />
       </div>

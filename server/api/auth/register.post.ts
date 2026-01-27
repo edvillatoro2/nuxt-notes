@@ -49,8 +49,7 @@ export default defineEventHandler(async (event) => {
   const user = await prisma.user.create({
     data: {
       email: body.email,
-      password: passwordHash,
-      salt: salt
+      password: passwordHash
     }
   })
   //create JWT token

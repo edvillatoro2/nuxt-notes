@@ -12,5 +12,8 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  modules: ['@nuxt/icon']
+  tiptap: {
+    prefix: 'Tiptap' //prefix for Tiptap imports, composables not included
+  },
+  modules: ['@nuxt/icon', 'nuxt-tiptap-editor']
 })

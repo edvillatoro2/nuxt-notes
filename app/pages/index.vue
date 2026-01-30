@@ -1,18 +1,36 @@
 <template>
   <div class="flex h-screen">
     <div class="flex flex-col gap-4 w-1/3 p-8 bg-[#464D77] text-white">
-      <div class="flex flex-col gap-4">
-        <h2 class="capitalize font-semibold tracking-widest text-4xl">today</h2>
-        <ul style="list-style: circle; list-style-position: inside">
-          <li class="p-2 bg-[#5A6091] rounded mb-2 cursor-pointer hover:bg-[#6b72a8]">note 1</li>
-          <li class="p-2 bg-[#5A6091] rounded mb-2 cursor-pointer hover:bg-[#6b72a8]">note 2</li>
-          <li class="p-2 bg-[#5A6091] rounded mb-2 cursor-pointer hover:bg-[#6b72a8]">note 3</li>
-        </ul>
+      <div v-for="note in notes" class="flex flex-col gap-4">
+        <div class="capitalize font-semibold tracking-widest text-4xl">
+          <NuxtTime :datetime="note?.updatedAt" relative numeric="auto" relative-style="long" />
+        </div>
+
+        <div class="cursor-pointer truncate rounded p-2 bg-[#5A6091] hover:bg-[#6b72a8]">
+          <ul style="list-style: circle; list-style-position: inside">
+            <li class="">
+              {{ note?.content.substring(0, 30) }}
+            </li>
+          </ul>
+          <div class="text-[0.725rem] font-semibold">
+            <NuxtTime :datetime="note?.updatedAt" hour="2-digit" minute="2-digit" locale="en-US" />
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="w-2/3 p-8 py-20">
-      <div class="flex justify-end mb-6">
+      <div class="flex justify-between mb-6">
+        <div @click="deleteNote" class="flex flex-col cursor-pointer">
+          <div class="relative group w-6 h-6">
+            <Icon name="mdi:trash-can-outline" size="24" class="absolute inset-0" />
+
+            <span
+              class="absolute top-0.5 left-0.75 w-4.5 h-1.5 bg-white border-2 border-black rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
+            ></span>
+          </div>
+          <div class="text-red-500 hover:text-red-600 font-black text-lg">Delete</div>
+        </div>
         <button
           @click="handleLogout"
           class="text-sm bg-red-500 hover:bg-red-600 cursor-pointer px-3 py-1 rounded text-white"
@@ -21,25 +39,9 @@
         </button>
       </div>
 
-      <div class="flex justify-between mb-4">
-        <button
-          @click="toggleEditor"
-          class="capitalize font-semibold text-sm cursor-pointer hover:opacity-40 flex items-center gap-2 bg-transparent border-none"
-        >
-          <Icon name="fluent-emoji-flat:pencil" style="color: black" size="24" />
-          <span>Click to take notes</span>
-        </button>
-        <div @click="deleteNote" class="relative cursor-pointer group w-6 h-6">
-          <Icon name="mdi:trash-can-outline" size="24" class="absolute inset-0" />
-          <span
-            class="absolute top-[2px] left-[3px] w-[18px] h-[6px] bg-white border-2 border-black rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
-          ></span>
-        </div>
-      </div>
-
       <!-- Editor Section -->
       <ClientOnly>
-        <div v-if="showEditor" class="mt-6">
+        <div class="mt-6">
           <TipTapEditor />
         </div>
       </ClientOnly>
@@ -53,20 +55,35 @@ definePageMeta({
   middleware: 'auth'
 })
 
-const { user } = useAuth()
-const { logout } = useAuth()
+interface Note {
+  id: number
+  content: string
+  userId: number
+  createdAt: string
+  updatedAt: string
+}
+
+const notes = ref<Note[]>([])
+const showEditor = ref(false)
+
+onMounted(async () => {
+  const res = await $fetch('/api/notes')
+  console.log('Notes:', res)
+
+  if (res?.success && res?.notes) {
+    notes.value = res.notes
+  }
+})
+
+const { logout, user } = useAuth()
 
 const handleLogout = async () => {
   await logout()
 }
 
-// Note functionality
-const showEditor = ref(false)
-
-const toggleEditor = () => {
-  showEditor.value = !showEditor.value
-  console.log('Editor toggled:', showEditor.value)
-}
+// const toggleEditor = () => {
+//   showEditor.value = !showEditor.value
+// }
 
 const deleteNote = () => {
   // This will be handled by the TipTapEditor component itself
@@ -78,6 +95,15 @@ const deleteNote = () => {
       showEditor.value = true
     }, 100)
   }
+}
+
+const normalizeDate = (dateStr: string) => {
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
 }
 </script>
 

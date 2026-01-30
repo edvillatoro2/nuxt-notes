@@ -111,8 +111,12 @@
 
 <script setup>
 const editor = useEditor({
-  content: '<p>Start writing your note...</p>',
-  extensions: [TiptapStarterKit]
+  content: '',
+  extensions: [TiptapStarterKit],
+  autofocus: true,
+  parseOptions: {
+    preserveWhitespace: 'full'
+  }
 })
 
 onBeforeUnmount(() => {

@@ -12,21 +12,25 @@ export default defineEventHandler(async (event) => {
 
   // verify token, get user info
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-      id: string
+    const secret = useRuntimeConfig().jwtSecret
+    const decoded = jwt.verify(token, secret) as {
+      userId: number
       email: string
     }
     // get authenticated user's notes
     const notes = await prisma.note.findMany({
       where: {
         // filter by userId from token
-        userId: decoded.id
+        userId: decoded.userId
       },
       orderBy: {
         updatedAt: 'desc'
       }
     })
-    return notes
+    return {
+      success: true,
+      notes
+    }
   } catch (err) {
     throw createError({
       statusCode: 401,

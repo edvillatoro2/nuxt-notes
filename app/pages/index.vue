@@ -20,17 +20,7 @@
     </div>
 
     <div class="w-2/3 p-8 py-20">
-      <div class="flex justify-between mb-6">
-        <div @click="deleteNote" class="flex flex-col cursor-pointer">
-          <div class="relative group w-6 h-6">
-            <Icon name="mdi:trash-can-outline" size="24" class="absolute inset-0" />
-
-            <span
-              class="absolute top-0.5 left-0.75 w-4.5 h-1.5 bg-white border-2 border-black rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
-            ></span>
-          </div>
-          <div class="text-red-500 hover:text-red-600 font-black text-lg">Delete</div>
-        </div>
+      <div class="mb-12 flex justify-end">
         <button
           @click="handleLogout"
           class="text-sm bg-red-500 hover:bg-red-600 cursor-pointer px-3 py-1 rounded text-white"
@@ -38,10 +28,26 @@
           Logout
         </button>
       </div>
+      <div class="flex justify-between mb-2">
+        <div @click="saveNote">
+          <Icon
+            name="streamline-color:send-email-flat"
+            size="24"
+            class="text-gray-400 cursor-pointer mx-auto transition-transform duration-900 hover:translate-x-full hover:rotate-x-50 rotate-z-45"
+          />
+        </div>
+
+        <div @click="deleteNote" class="relative cursor-pointer group w-6 h-6">
+          <Icon name="flat-color-icons:full-trash" size="24" class="absolute inset-0" />
+          <span
+            class="absolute top-0.125 left-0.75 w-4.5 h-1.75 bg-[#484e78] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
+          ></span>
+        </div>
+      </div>
 
       <!-- Editor Section -->
       <ClientOnly>
-        <div class="mt-6">
+        <div>
           <TipTapEditor />
         </div>
       </ClientOnly>
@@ -95,6 +101,11 @@ const deleteNote = () => {
       showEditor.value = true
     }, 100)
   }
+}
+
+const saveNote = () => {
+  // This will be handled by the TipTapEditor component itself
+  alert('Note saved! (functionality to be implemented)')
 }
 
 const normalizeDate = (dateStr: string) => {

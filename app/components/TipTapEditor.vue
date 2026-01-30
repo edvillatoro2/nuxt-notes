@@ -110,13 +110,51 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  content: {
+    type: String,
+    default: ''
+  },
+  noteId: {
+    type: Number,
+    default: null
+  }
+})
+
+const emit = defineEmits(['contentUpdate'])
+
 const editor = useEditor({
-  content: '',
+  content: props.content || '',
   extensions: [TiptapStarterKit],
   autofocus: true,
   parseOptions: {
     preserveWhitespace: 'full'
+  },
+  onUpdate: ({ editor }) => {
+    //emit updated content to parent component
+    emit('contentUpdate', {
+      html: editor.getHTML(),
+      text: editor.getText(),
+      noteId: props.noteId
+    })
   }
+})
+
+//watch for content prop changes to update editor content
+watch(
+  () => props.content,
+  (newContent) => {
+    if (editor.value && newContent !== editor.value.getHTML()) {
+      editor.value.commands.setContent(newContent || '')
+    }
+  }
+)
+
+//expose editor instance for parent components if needed
+defineExpose({
+  getContent: () => editor.value?.getHTML() || '',
+  getText: () => editor.value?.getText() || '',
+  clearContent: () => editor.value?.commands.clearContent()
 })
 
 onBeforeUnmount(() => {

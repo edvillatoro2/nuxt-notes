@@ -37,30 +37,30 @@ export type NoteSumAggregateOutputType = {
 }
 
 export type NoteMinAggregateOutputType = {
-  id: number | null
   title: string | null
   content: string | null
-  userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  id: number | null
+  userId: number | null
 }
 
 export type NoteMaxAggregateOutputType = {
-  id: number | null
   title: string | null
   content: string | null
-  userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  id: number | null
+  userId: number | null
 }
 
 export type NoteCountAggregateOutputType = {
-  id: number
   title: number
   content: number
-  userId: number
   createdAt: number
   updatedAt: number
+  id: number
+  userId: number
   _all: number
 }
 
@@ -76,30 +76,30 @@ export type NoteSumAggregateInputType = {
 }
 
 export type NoteMinAggregateInputType = {
-  id?: true
   title?: true
   content?: true
-  userId?: true
   createdAt?: true
   updatedAt?: true
+  id?: true
+  userId?: true
 }
 
 export type NoteMaxAggregateInputType = {
-  id?: true
   title?: true
   content?: true
-  userId?: true
   createdAt?: true
   updatedAt?: true
+  id?: true
+  userId?: true
 }
 
 export type NoteCountAggregateInputType = {
-  id?: true
   title?: true
   content?: true
-  userId?: true
   createdAt?: true
   updatedAt?: true
+  id?: true
+  userId?: true
   _all?: true
 }
 
@@ -190,12 +190,12 @@ export type NoteGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 export type NoteGroupByOutputType = {
-  id: number
   title: string
   content: string
-  userId: number
   createdAt: Date
   updatedAt: Date
+  id: number
+  userId: number
   _count: NoteCountAggregateOutputType | null
   _avg: NoteAvgAggregateOutputType | null
   _sum: NoteSumAggregateOutputType | null
@@ -222,22 +222,22 @@ export type NoteWhereInput = {
   AND?: Prisma.NoteWhereInput | Prisma.NoteWhereInput[]
   OR?: Prisma.NoteWhereInput[]
   NOT?: Prisma.NoteWhereInput | Prisma.NoteWhereInput[]
-  id?: Prisma.IntFilter<"Note"> | number
   title?: Prisma.StringFilter<"Note"> | string
   content?: Prisma.StringFilter<"Note"> | string
-  userId?: Prisma.IntFilter<"Note"> | number
   createdAt?: Prisma.DateTimeFilter<"Note"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Note"> | Date | string
+  id?: Prisma.IntFilter<"Note"> | number
+  userId?: Prisma.IntFilter<"Note"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type NoteOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -248,19 +248,19 @@ export type NoteWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.NoteWhereInput | Prisma.NoteWhereInput[]
   title?: Prisma.StringFilter<"Note"> | string
   content?: Prisma.StringFilter<"Note"> | string
-  userId?: Prisma.IntFilter<"Note"> | number
   createdAt?: Prisma.DateTimeFilter<"Note"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Note"> | Date | string
+  userId?: Prisma.IntFilter<"Note"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type NoteOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   _count?: Prisma.NoteCountOrderByAggregateInput
   _avg?: Prisma.NoteAvgOrderByAggregateInput
   _max?: Prisma.NoteMaxOrderByAggregateInput
@@ -272,12 +272,12 @@ export type NoteScalarWhereWithAggregatesInput = {
   AND?: Prisma.NoteScalarWhereWithAggregatesInput | Prisma.NoteScalarWhereWithAggregatesInput[]
   OR?: Prisma.NoteScalarWhereWithAggregatesInput[]
   NOT?: Prisma.NoteScalarWhereWithAggregatesInput | Prisma.NoteScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Note"> | number
   title?: Prisma.StringWithAggregatesFilter<"Note"> | string
   content?: Prisma.StringWithAggregatesFilter<"Note"> | string
-  userId?: Prisma.IntWithAggregatesFilter<"Note"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Note"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Note"> | Date | string
+  id?: Prisma.IntWithAggregatesFilter<"Note"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"Note"> | number
 }
 
 export type NoteCreateInput = {
@@ -289,12 +289,12 @@ export type NoteCreateInput = {
 }
 
 export type NoteUncheckedCreateInput = {
-  id?: number
   title: string
   content: string
-  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  id?: number
+  userId: number
 }
 
 export type NoteUpdateInput = {
@@ -306,21 +306,21 @@ export type NoteUpdateInput = {
 }
 
 export type NoteUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type NoteCreateManyInput = {
-  id?: number
   title: string
   content: string
-  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  id?: number
+  userId: number
 }
 
 export type NoteUpdateManyMutationInput = {
@@ -331,12 +331,12 @@ export type NoteUpdateManyMutationInput = {
 }
 
 export type NoteUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type NoteListRelationFilter = {
@@ -350,12 +350,12 @@ export type NoteOrderByRelationAggregateInput = {
 }
 
 export type NoteCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type NoteAvgOrderByAggregateInput = {
@@ -364,21 +364,21 @@ export type NoteAvgOrderByAggregateInput = {
 }
 
 export type NoteMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type NoteMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type NoteSumOrderByAggregateInput = {
@@ -436,11 +436,11 @@ export type NoteCreateWithoutUserInput = {
 }
 
 export type NoteUncheckedCreateWithoutUserInput = {
-  id?: number
   title: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  id?: number
 }
 
 export type NoteCreateOrConnectWithoutUserInput = {
@@ -473,20 +473,20 @@ export type NoteScalarWhereInput = {
   AND?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
   OR?: Prisma.NoteScalarWhereInput[]
   NOT?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
-  id?: Prisma.IntFilter<"Note"> | number
   title?: Prisma.StringFilter<"Note"> | string
   content?: Prisma.StringFilter<"Note"> | string
-  userId?: Prisma.IntFilter<"Note"> | number
   createdAt?: Prisma.DateTimeFilter<"Note"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Note"> | Date | string
+  id?: Prisma.IntFilter<"Note"> | number
+  userId?: Prisma.IntFilter<"Note"> | number
 }
 
 export type NoteCreateManyUserInput = {
-  id?: number
   title: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  id?: number
 }
 
 export type NoteUpdateWithoutUserInput = {
@@ -497,63 +497,63 @@ export type NoteUpdateWithoutUserInput = {
 }
 
 export type NoteUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type NoteUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
 
 export type NoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   title?: boolean
   content?: boolean
-  userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  id?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
 
 export type NoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   title?: boolean
   content?: boolean
-  userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  id?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
 
 export type NoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   title?: boolean
   content?: boolean
-  userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  id?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
 
 export type NoteSelectScalar = {
-  id?: boolean
   title?: boolean
   content?: boolean
-  userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  id?: boolean
+  userId?: boolean
 }
 
-export type NoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["note"]>
+export type NoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"title" | "content" | "createdAt" | "updatedAt" | "id" | "userId", ExtArgs["result"]["note"]>
 export type NoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -570,12 +570,12 @@ export type $NotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
     title: string
     content: string
-    userId: number
     createdAt: Date
     updatedAt: Date
+    id: number
+    userId: number
   }, ExtArgs["result"]["note"]>
   composites: {}
 }
@@ -659,8 +659,8 @@ export interface NoteDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    * // Get first 10 Notes
    * const notes = await prisma.note.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const noteWithIdOnly = await prisma.note.findMany({ select: { id: true } })
+   * // Only select the `title`
+   * const noteWithTitleOnly = await prisma.note.findMany({ select: { title: true } })
    * 
    */
   findMany<T extends NoteFindManyArgs>(args?: Prisma.SelectSubset<T, NoteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -704,9 +704,9 @@ export interface NoteDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    *   ]
    * })
    * 
-   * // Create many Notes and only return the `id`
-   * const noteWithIdOnly = await prisma.note.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many Notes and only return the `title`
+   * const noteWithTitleOnly = await prisma.note.createManyAndReturn({
+   *   select: { title: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -795,9 +795,9 @@ export interface NoteDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    *   ]
    * })
    * 
-   * // Update zero or more Notes and only return the `id`
-   * const noteWithIdOnly = await prisma.note.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more Notes and only return the `title`
+   * const noteWithTitleOnly = await prisma.note.updateManyAndReturn({
+   *   select: { title: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1000,12 +1000,12 @@ export interface Prisma__NoteClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the Note model
  */
 export interface NoteFieldRefs {
-  readonly id: Prisma.FieldRef<"Note", 'Int'>
   readonly title: Prisma.FieldRef<"Note", 'String'>
   readonly content: Prisma.FieldRef<"Note", 'String'>
-  readonly userId: Prisma.FieldRef<"Note", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Note", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Note", 'DateTime'>
+  readonly id: Prisma.FieldRef<"Note", 'Int'>
+  readonly userId: Prisma.FieldRef<"Note", 'Int'>
 }
     
 

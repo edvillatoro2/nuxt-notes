@@ -27,8 +27,7 @@ export default defineEventHandler(async (event) => {
       // Update existing note
       note = await prisma.note.update({
         where: {
-          id,
-          userId: decoded.userId // Ensure user owns the note
+          id
         },
         data: {
           title,

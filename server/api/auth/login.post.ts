@@ -35,10 +35,20 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  //get secret from runtime config
+  const secret = useRuntimeConfig().jwtSecret
+
   //create JWT token
-  const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, {
-    expiresIn: '7d'
-  })
+  const token = jwt.sign(
+    {
+      UserId: user.id,
+      email: user.email
+    },
+    secret,
+    {
+      expiresIn: '7d'
+    }
+  )
 
   //set cookie
   setCookie(event, 'auth_token', token, {

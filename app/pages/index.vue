@@ -1,11 +1,14 @@
 <template>
   <div class="flex md:flex-row flex-col h-screen">
-    <div class="flex w-full flex-col gap-4 md:w-1/3 p-8 bg-[#464D77] text-white">
-      <div @click="deleteNote" class="relative mb-12 cursor-pointer flex justify-end group">
-        <Icon name="flat-color-icons:full-trash" size="36" class="absolute right-0" />
-        <span
-          class="absolute top-0.25 right-0.75 w-7 h-2 bg-black rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
-        ></span>
+    <div class="flex w-full flex-col gap-4 md:w-1/3 p-8 bg-[#464D77] text-white overflow-y-scroll">
+      <div @click="deleteNote" class="relative mb-12 cursor-pointer flex group">
+        <div class="p-2 bg-red-500 rounded">
+          <Icon name="flat-color-icons:full-trash" size="36" class="relative" />
+          <span
+            class="absolute top-2.5 left-3 w-7 h-2 bg-[#5A6091] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
+          ></span>
+          <span class="font-medium text-sm"> Delete </span>
+        </div>
       </div>
       <div v-for="note in notes" class="flex flex-col gap-4">
         <div class="capitalize font-semibold tracking-widest text-4xl">
@@ -39,11 +42,17 @@
         </button>
       </div>
       <div class="mb-2">
-        <div @click="saveNote">
+        <div @click="saveNote" class="cursor-pointer">
           <Icon
             name="streamline-color:send-email-flat"
             size="24"
-            class="text-gray-400 cursor-pointer mx-auto transition-transform duration-900 hover:translate-x-full hover:rotate-x-50 rotate-z-45"
+            class=""
+            :class="[
+              'text-gray-400 mx-auto rotate-z-45',
+              isSending
+                ? 'transition-transform duration-900 ease-in-out translate-x-full rotate-x-50'
+                : ''
+            ]"
           />
         </div>
       </div>
@@ -85,6 +94,7 @@ const currentNoteId = ref<number | null>(null)
 const currentNoteContent = ref('')
 const editorRef = ref(null)
 const currentContent = ref({ html: '', text: '' })
+const isSending = ref(false)
 
 onMounted(async () => {
   await loadNotes()
@@ -127,6 +137,10 @@ const saveNote = async () => {
     alert('Cannot save empty note.')
     return
   }
+
+  //animation trigger
+  isSending.value = true
+
   try {
     // extract title from first 30 chars
     const title = currentContent.value.text.substring(0, 30) || 'Untitled'
@@ -146,11 +160,19 @@ const saveNote = async () => {
       if (!currentNoteId.value) {
         currentNoteId.value = res.note.id
       }
+
+      //reset animation
+      setTimeout(() => {
+        isSending.value = false
+      }, 900)
     } else {
+      isSending.value = false
       alert('Failed to save note.')
     }
   } catch (error) {
     console.error('Error saving note:', error)
+    isSending.value = false
+    alert('An error occurred while saving the note.')
   }
 }
 

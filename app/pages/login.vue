@@ -1,6 +1,8 @@
 <template>
   <div class="flex md:flex-row flex-col h-screen p-2 gap-8">
-    <div class="flex flex-col w-full lg:w-1/3 justify-center gap-4 p-8 bg-[#7f7fa8] text-white">
+    <div
+      class="flex flex-col w-full lg:w-1/3 justify-center rounded gap-4 p-8 bg-[#7f7fa8] text-white"
+    >
       <!-- Global error -->
       <div v-if="duplicateError" class="text-red-600 text-2xl font-semibold">
         {{ duplicateError }}
@@ -66,16 +68,30 @@
           <!-- login button -->
           <button
             :disabled="loading"
-            class="bg-[#297373] hover:bg-[#297373c1] disabled:opacity-60 text-white font-bold py-2 px-4 rounded"
+            class="bg-[#297373] hover:bg-[#297373c1] cursor-pointer disabled:opacity-60 text-white font-bold py-2 px-4 rounded"
           >
             {{ loading ? 'Logging in…' : 'Login' }}
           </button>
         </div>
       </form>
     </div>
-    <div class="lg:w-2/3 bg-[#d67a63] w-full p-8">
+    <div class="lg:w-2/3 bg-[#d67a63] w-full p-8 rounded">
       <div class="m-2 bg-[#423129]">
-        <div class="font-semibold capitalize text-white text-8xl text-right">NuxtNotes</div>
+        <!-- Wrap GSAP animated content in ClientOnly -->
+        <ClientOnly>
+          <div
+            v-gsap.whenVisible.animateText.once.slow
+            class="font-semibold capitalize text-white text-8xl text-right p-2"
+          >
+            Nuxt Notes
+          </div>
+          <template #fallback>
+            <!-- Fallback for server-side rendering -->
+            <div class="font-semibold capitalize text-white text-8xl text-right p-2">
+              Nuxt Notes
+            </div>
+          </template>
+        </ClientOnly>
       </div>
     </div>
   </div>

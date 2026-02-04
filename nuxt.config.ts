@@ -15,5 +15,5 @@ export default defineNuxtConfig({
   tiptap: {
     prefix: 'Tiptap' //prefix for Tiptap imports, composables not included
   },
-  modules: ['@nuxt/icon', 'nuxt-tiptap-editor']
+  modules: ['@nuxt/icon', 'nuxt-tiptap-editor', 'v-gsap-nuxt']
 })

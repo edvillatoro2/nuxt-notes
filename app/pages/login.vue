@@ -1,7 +1,18 @@
 <template>
-  <div class="flex md:flex-row flex-col h-screen p-2 gap-8">
+  <div
+    class="flex md:flex-row flex-col h-screen p-2 gap-8"
+    style="
+      background: #ffffff;
+      background: radial-gradient(
+        circle,
+        rgba(176, 84, 70, 0.5) 0%,
+        rgba(154, 255, 3, 0.24) 50%,
+        rgba(129, 128, 168, 0.55) 69%
+      );
+    "
+  >
     <div
-      class="flex flex-col w-full lg:w-1/3 justify-center rounded gap-4 p-8 bg-[#7f7fa8] text-white"
+      class="flex flex-col w-full lg:w-2/3 justify-center rounded gap-4 p-8 text-white bg-white/45"
     >
       <!-- Global error -->
       <div v-if="duplicateError" class="text-red-600 text-2xl font-semibold">
@@ -12,12 +23,11 @@
       <div v-if="successMessage" class="text-green-600 text-2xl font-semibold">
         {{ successMessage }}
       </div>
+      <div class="bg-black p-2 flex justify-center">
+        <h1 class="text-6xl font-bold capitalize">Login</h1>
+      </div>
 
-      <h1 class="text-4xl font-bold capitalize">
-        Login <span class="text-2xl">to your account</span>
-      </h1>
-
-      <p class="capitalize">
+      <p class="capitalize bg-black p-2">
         dont have an account?
         <NuxtLink
           class="font-semibold text-[#99ff00] underline cursor-pointer hover:text-[#00ff44a9]"
@@ -35,7 +45,7 @@
             <p class="text-red-900 font-semibold">{{ emailError }}</p>
           </div>
 
-          <label class="block font-medium">Email Address</label>
+          <label class="block font-medium bg-black p-2">Email Address</label>
           <input
             id="email"
             v-model="email"
@@ -53,7 +63,7 @@
             <p class="text-red-900 font-semibold">{{ passwordError }}</p>
           </div>
 
-          <label class="block font-medium">Password</label>
+          <label class="block font-medium bg-black p-2">Password</label>
           <input
             id="password"
             v-model="password"
@@ -64,8 +74,8 @@
             :class="passwordError ? 'border-red-500 bg-red-200' : ''"
           />
         </div>
+        <!-- login button -->
         <div>
-          <!-- login button -->
           <button
             :disabled="loading"
             class="bg-[#297373] hover:bg-[#297373c1] cursor-pointer disabled:opacity-60 text-white font-bold py-2 px-4 rounded"
@@ -75,23 +85,9 @@
         </div>
       </form>
     </div>
-    <div class="lg:w-2/3 bg-[#d67a63] w-full p-8 rounded">
-      <div class="m-2 bg-[#423129]">
-        <!-- Wrap GSAP animated content in ClientOnly -->
-        <ClientOnly>
-          <div
-            v-gsap.whenVisible.animateText.once.slow
-            class="font-semibold capitalize text-white text-8xl text-right p-2"
-          >
-            Nuxt Notes
-          </div>
-          <template #fallback>
-            <!-- Fallback for server-side rendering -->
-            <div class="font-semibold capitalize text-white text-8xl text-right p-2">
-              Nuxt Notes
-            </div>
-          </template>
-        </ClientOnly>
+    <div class="lg:w-3/4 w-full p-8 rounded">
+      <div class="w-full h-full flex items-center justify-center">
+        <img src="/images/logo.png" alt="Nuxt Notes Logo" />
       </div>
     </div>
   </div>

@@ -25,7 +25,10 @@
     </p>
 
     <!-- register form -->
-    <h1 class="text-4xl font-bold capitalize bg-black p-2">register</h1>
+    <div class="bg-black p-2 flex justify-center">
+      <h1 class="text-6xl font-bold capitalize">Register</h1>
+    </div>
+
     <h4 class="font-semibold text-lg bg-black p-2">sign up for free account</h4>
 
     <!-- inputs -->

@@ -1,8 +1,8 @@
 <template>
   <div class="flex md:flex-row flex-col h-screen">
     <div class="flex w-full flex-col gap-4 md:w-1/3 p-8 bg-[#464D77] text-white overflow-y-scroll">
-      <div @click="deleteNote" class="relative mb-12 cursor-pointer flex group">
-        <div class="p-2 bg-red-500 rounded">
+      <div  class="relative mb-12 cursor-pointer flex group">
+        <div @click="deleteNote" class="p-2 bg-red-500 rounded">
           <Icon name="flat-color-icons:full-trash" size="36" class="relative" />
           <span
             class="absolute top-2.5 left-3 w-7 h-2 bg-[#5A6091] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"

@@ -1,21 +1,21 @@
 <template>
   <div class="flex md:flex-row flex-col-reverse h-screen p-8 gap-8">
     <div
-      class="flex w-full flex-col gap-4 md:w-1/3 p-8 bg-[#464D77]/40 rounded text-white overflow-y-scroll"
+      class="flex w-full flex-col gap-4 md:w-1/3 p-8 py-20 bg-[#464D77]/40 rounded text-white overflow-y-scroll"
     >
-      <div class="relative mb-12 cursor-pointer flex group justify-end">
-        <div @click="deleteNote" class="p-2 hover:bg-red-500/40 bg-red-600 rounded relative">
+      <div class="relative mb-12 flex justify-end">
+        <div
+          @click="deleteNote"
+          class="inline-flex items-center justify-center p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#CF5C36] hover:text-[#cf5c36b4] rounded relative"
+        >
           <Icon name="flat-color-icons:full-trash" size="36" />
+
           <span
             class="absolute top-2.5 left-3 w-7 h-2 bg-[#5A6091] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
-          ></span>
-          <!-- <span class="font-medium text-sm">
-            Delete {{ selectedNotes.length > 0 ? ` ${selectedNotes.length}` : '' }} note{{
-              selectedNotes.length > 1 ? 's' : ''
-            }}
-          </span> -->
+          />
         </div>
       </div>
+
       <div v-for="note in notes" class="flex flex-col gap-4">
         <div class="capitalize font-semibold tracking-widest text-4xl">
           <NuxtTime :datetime="note?.updatedAt" relative numeric="auto" relative-style="long" />
@@ -39,22 +39,24 @@
     </div>
 
     <div class="md:w-2/3 w-full p-8 py-20">
-      <div class="mb-12 flex justify-end">
-        <button
-          @click="handleLogout"
-          class="text-sm bg-red-500 font-semibold hover:bg-red-600 cursor-pointer px-3 py-2 rounded text-white"
-        >
-          Logout
-        </button>
-      </div>
-      <div class="mb-2">
-        <div @click="saveNote" class="cursor-pointer">
+      <div class="mb-8 flex justify-between">
+        <div @click="saveNote" class="cursor-pointer group inline-flex items-center transition">
           <Icon
             name="streamline-color:send-email-flat"
             size="24"
-            :class="['text-gray-400 mx-auto', isSending ? 'animate-paperplane' : '']"
+            :class="[
+              'mx-auto transition duration-200',
+              'group-hover:brightness-110 group-hover:saturate-125',
+              isSending ? 'animate-paperplane' : ''
+            ]"
           />
         </div>
+        <button
+          @click="handleLogout"
+          class="font-semibold cursor-pointer px-3 py-2 rounded transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#CF5C36] hover:text-[#cf5c36b4]"
+        >
+          Logout
+        </button>
       </div>
 
       <!-- Editor Section -->

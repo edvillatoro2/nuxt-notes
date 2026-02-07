@@ -4,7 +4,7 @@
       class="flex w-full flex-col gap-4 md:w-1/3 p-8 bg-[#464D77]/40 rounded text-white overflow-y-scroll"
     >
       <div class="relative mb-12 cursor-pointer flex group justify-end">
-        <div @click="deleteNote" class="p-2 bg-red-500/40 hover:bg-red-600/70 rounded relative">
+        <div @click="deleteNote" class="p-2 hover:bg-red-500/40 bg-red-600 rounded relative">
           <Icon name="flat-color-icons:full-trash" size="36" />
           <span
             class="absolute top-2.5 left-3 w-7 h-2 bg-[#5A6091] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
@@ -85,9 +85,9 @@
 
 <script setup lang="ts">
 // Apply auth middleware
-definePageMeta({
-  middleware: 'auth'
-})
+// definePageMeta({
+//   middleware: 'auth'
+// })
 
 interface Note {
   title: string
@@ -166,7 +166,10 @@ const handleContentUpdate = (content: { html: string; text: string }) => {
 }
 
 const saveNote = async () => {
-  if (!currentContent.value.html || currentContent.value.html === '') {
+  // check if content is empty
+  const emptyContent = currentContent.value.text.trim()
+
+  if (!emptyContent || emptyContent === '') {
     alert('Cannot save empty note.')
     return
   }

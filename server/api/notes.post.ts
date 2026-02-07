@@ -26,9 +26,7 @@ export default defineEventHandler(async (event) => {
     if (id && typeof id === 'number') {
       // Update existing note
       note = await prisma.note.update({
-        where: {
-          id
-        },
+        where: { id },
         data: {
           title,
           content

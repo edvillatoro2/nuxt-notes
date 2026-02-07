@@ -90,7 +90,7 @@
                 </defs>
                 <text class="text-[17px] font-bold fill-black uppercase tracking-widest">
                   <textPath href="#circlePath" startOffset="0%">
-                    dont have an account • yet •
+                    dont have an account yet? •
                   </textPath>
                 </text>
               </svg>

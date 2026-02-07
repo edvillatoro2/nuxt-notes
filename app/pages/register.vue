@@ -89,9 +89,9 @@
                     d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"
                   />
                 </defs>
-                <text class="text-[17px] font-bold fill-black uppercase tracking-widest">
+                <text class="text-[16px] font-bold fill-black uppercase tracking-widest">
                   <textPath href="#circlePath" startOffset="0%">
-                    already registered? • to your account •
+                    already registered? • go to your account •
                   </textPath>
                 </text>
               </svg>

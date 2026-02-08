@@ -1,15 +1,21 @@
 <template>
   <div class="flex md:flex-row flex-col-reverse h-screen p-8 gap-8">
     <div
-      class="flex w-full flex-col gap-4 md:w-1/3 p-8 py-20 bg-[#464D77]/40 rounded text-white overflow-y-scroll"
+      class="flex w-full flex-col gap-4 md:w-1/3 p-8 bg-[#464D77]/40 rounded text-white overflow-y-scroll"
     >
-      <div class="relative mb-12 flex justify-end">
+      <div
+        v-gsap.splitText.chars.stagger.from="{ opacity: 0, y: 80 }"
+        class="text-8xl flex justify-center font-bold tracking-widest text-outline text-[#cdcffa]"
+      >
+        Notes
+      </div>
+
+      <div class="relative flex justify-end">
         <div
           @click="deleteNote"
           class="inline-flex items-center justify-center p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#CF5C36] hover:text-[#cf5c36b4] rounded relative"
         >
           <Icon name="flat-color-icons:full-trash" size="36" />
-
           <span
             class="absolute top-2.5 left-3 w-7 h-2 bg-[#5A6091] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
           />
@@ -22,8 +28,8 @@
         </div>
 
         <div
-          @click="toggleNotes(note)"
-          :class="{ 'bg-[#6f7acc]': selectedNotes.includes(note.id) }"
+          @click="toggleNote(note)"
+          :class="{ 'bg-[#6f7acc]/80': selectedNotes.includes(note.id) }"
           class="cursor-pointer truncate rounded p-2 bg-[#5A6091] hover:bg-[#6f7acc]"
         >
           <ul style="list-style: circle; list-style-position: inside">
@@ -62,7 +68,7 @@
       <!-- Editor Section -->
       <ClientOnly>
         <div
-          class="p-8 rounded"
+          class="p-2 rounded"
           style="
             background: #b05446;
             background: linear-gradient(
@@ -86,10 +92,7 @@
 </template>
 
 <script setup lang="ts">
-// Apply auth middleware
-// definePageMeta({
-//   middleware: 'auth'
-// })
+const { open: openModal } = useModal()
 
 interface Note {
   title: string
@@ -126,30 +129,27 @@ const loadNotes = async () => {
 }
 
 //toggle note selection for deletion
-const toggleNotes = (note: Note) => {
+const toggleNote = (note: Note) => {
   const index = selectedNotes.value.indexOf(note.id)
   if (index > -1) {
-    // already selected, remove from selection
-    selectedNotes.value.splice(index, 1)
-
-    // if currently active note is deselected, clear editor
-    if (currentNoteId.value === note.id) {
-      currentNoteId.value = null
-      currentNoteContent.value = ''
-      currentContent.value = { html: '', text: '' }
-      activeNote.value = null
-    }
+    // already selected, remove from selection and clear editor if it's the active note
+    selectedNotes.value = []
+    currentNoteId.value = null
+    currentNoteContent.value = ''
+    currentContent.value = { html: '', text: '' }
+    activeNote.value = null
   } else {
-    // not selected, add to selection
-    selectedNotes.value.push(note.id)
+    // not selected, clear previous selection and select new note
+    selectedNotes.value = [note.id]
 
-    //load selected note into editor
+    // load note into editor
     loadNote(note)
   }
 }
 
 // load selected note content into editor
 const loadNote = (note: Note) => {
+  // clear any selections when loading a note for editing
   activeNote.value = note.id ? note : null
   currentNoteId.value = note.id
   currentNoteContent.value = note.content
@@ -169,10 +169,17 @@ const handleContentUpdate = (content: { html: string; text: string }) => {
 
 const saveNote = async () => {
   // check if content is empty
-  const emptyContent = currentContent.value.text.trim()
+  const emptyContent = currentContent.value.text?.trim() || ''
+  const htmlContent = currentContent.value.html?.trim() || ''
 
-  if (!emptyContent || emptyContent === '') {
-    alert('Cannot save empty note.')
+  const isEmptyHtml = !htmlContent || htmlContent === '<p></p>' || htmlContent === ''
+  const isEmptyText = !emptyContent || emptyContent === ''
+
+  if (isEmptyHtml && isEmptyText) {
+    openModal({
+      title: 'Empty Note',
+      message: 'Cannot save an empty note. Please add some content before saving.'
+    })
     return
   }
 
@@ -202,15 +209,24 @@ const saveNote = async () => {
       setTimeout(() => {
         isSending.value = false
       }, 950)
-      alert('Note saved successfully!')
+      openModal({
+        title: 'Save Successful',
+        message: 'Note saved successfully!'
+      })
     } else {
       isSending.value = false
-      alert('Failed to save note.')
+      openModal({
+        title: 'Save Failed',
+        message: 'Failed to save note.'
+      })
     }
   } catch (error) {
     console.error('Error saving note:', error)
     isSending.value = false
-    alert('An error occurred while saving the note.')
+    openModal({
+      title: 'Error Occured',
+      message: 'An error occurred while saving the note.'
+    })
   }
 }
 
@@ -218,52 +234,88 @@ const deleteNote = async () => {
   // if notes are selected, delete them all
   if (selectedNotes.value.length > 0) {
     const count = selectedNotes.value.length
-    if (!confirm(`Delete ${count} note${count > 1 ? 's' : ''}?`)) return
 
-    try {
-      await Promise.all(
-        selectedNotes.value.map((id) => $fetch(`/api/notes/${id}`, { method: 'DELETE' }))
-      )
+    openModal({
+      title: 'Confirm Deletion',
+      message: 'Are you sure you want to delete this note?',
+      confirmText: 'Delete',
+      action: async () => {
+        try {
+          await Promise.all(
+            selectedNotes.value.map((id) => $fetch(`/api/notes/${id}`, { method: 'DELETE' }))
+          )
 
-      if (currentNoteId.value && selectedNotes.value.includes(currentNoteId.value)) {
-        editorRef.value?.clearContent()
-        currentNoteId.value = null
-        currentNoteContent.value = ''
-        currentContent.value = { html: '', text: '' }
+          if (currentNoteId.value && selectedNotes.value.includes(currentNoteId.value)) {
+            editorRef.value?.clearContent()
+            currentNoteId.value = null
+            currentNoteContent.value = ''
+            currentContent.value = { html: '', text: '' }
+          }
+          selectedNotes.value = []
+          await loadNotes()
+
+          // success message
+          openModal({
+            title: 'Success',
+            message: 'Note successfully deleted!'
+          })
+        } catch (error) {
+          console.error('Error:', error)
+          selectedNotes.value = []
+          openModal({
+            title: 'Error',
+            message: 'Failed to delete notes. Please try again.'
+          })
+        }
       }
-
-      selectedNotes.value = []
-      await loadNotes()
-      alert(`${count} note${count > 1 ? 's' : ''} deleted!`)
-    } catch (error) {
-      console.error('Error:', error)
-    }
+    })
     return
   }
 
   // delete current note
   if (!currentNoteId.value) {
-    alert('No note selected.')
+    openModal({
+      title: 'No Note Selected',
+      message: 'Please select a note to delete.'
+    })
     return
   }
 
-  if (confirm('Delete this note?')) {
-    try {
-      await $fetch(`/api/notes/${currentNoteId.value}`, { method: 'DELETE' })
-      editorRef.value?.clearContent()
-      currentNoteId.value = null
-      currentNoteContent.value = ''
-      currentContent.value = { html: '', text: '' }
-      await loadNotes()
-      alert('Note deleted!')
-    } catch (error) {
-      console.error('Error:', error)
+  openModal({
+    title: 'Delete Note',
+    message: 'Are you sure you want to delete this note?',
+    confirmText: 'Delete',
+    action: async () => {
+      try {
+        await $fetch(`/api/notes/${currentNoteId.value}`, { method: 'DELETE' })
+        editorRef.value?.clearContent()
+        currentNoteId.value = null
+        currentNoteContent.value = ''
+        currentContent.value = { html: '', text: '' }
+        await loadNotes()
+
+        openModal({
+          title: 'Success',
+          message: 'Note deleted successfully!'
+        })
+      } catch (error) {
+        console.error('Error:', error)
+        openModal({
+          title: 'Error',
+          message: 'Failed to delete note. Please try again.'
+        })
+      }
     }
-  }
+  })
 }
 </script>
 
 <style scoped>
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+  text-shadow: -4px -4px white;
+}
 @keyframes paperplane {
   0% {
     transform: translate(0, 0) rotate(0deg) scale(1);

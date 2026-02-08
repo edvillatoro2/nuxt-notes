@@ -111,7 +111,7 @@
 
 <script setup>
 const props = defineProps({
-  content: {
+  initialContent: {
     type: String,
     default: ''
   },
@@ -124,7 +124,7 @@ const props = defineProps({
 const emit = defineEmits(['contentUpdate'])
 
 const editor = useEditor({
-  content: props.content || '',
+  content: props.initialContent || '',
   extensions: [TiptapStarterKit],
   autofocus: true,
   parseOptions: {
@@ -142,7 +142,7 @@ const editor = useEditor({
 
 //watch for content prop changes to update editor content
 watch(
-  () => props.content,
+  () => props.initialContent,
   (newContent) => {
     if (editor.value && newContent !== editor.value.getHTML()) {
       editor.value.commands.setContent(newContent || '')

@@ -1,6 +1,7 @@
 <template>
   <div>
     <NuxtPage />
+    <GlobalModal />
   </div>
 </template>
 

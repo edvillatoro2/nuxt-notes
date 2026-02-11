@@ -10,7 +10,15 @@
         Notes
       </div>
 
-      <div class="relative flex justify-end">
+      <div class="relative flex justify-between">
+        <!-- New Note Button -->
+        <div
+          @click="newNote"
+          class="inline-flex items-center justify-center p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#9AFF03] hover:text-[#9AFF03]/80 rounded relative"
+        >
+          <Icon name="material-symbols:note-add" size="36" />
+        </div>
+
         <div
           @click="deleteNote"
           class="inline-flex items-center justify-center p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#CF5C36] hover:text-[#cf5c36b4] rounded relative"
@@ -22,14 +30,21 @@
         </div>
       </div>
 
-      <div v-for="note in notes" class="flex flex-col gap-4">
+      <div v-for="note in displayNotes" :key="note.id" class="flex flex-col gap-4">
         <div class="capitalize font-semibold tracking-widest text-4xl">
-          <NuxtTime :datetime="note?.updatedAt" relative numeric="auto" relative-style="long" />
+          <template v-if="note.id === -1"> New Note </template>
+          <template v-else>
+            <NuxtTime :datetime="note?.updatedAt" relative numeric="auto" relative-style="long" />
+          </template>
         </div>
 
         <div
-          @click="toggleNote(note)"
-          :class="{ 'bg-[#6f7acc]/80': selectedNotes.includes(note.id) }"
+          @click="note.id !== -1 ? toggleNote(note) : undefined"
+          :class="{
+            'bg-[#6f7acc]/80': selectedNotes.includes(note.id),
+            'cursor-default': note.id === -1,
+            'cursor-pointer': note.id !== -1
+          }"
           class="cursor-pointer truncate rounded p-2 bg-[#5A6091] hover:bg-[#6f7acc]"
         >
           <ul style="list-style: circle; list-style-position: inside">
@@ -45,8 +60,8 @@
     </div>
 
     <div class="md:w-2/3 w-full p-8 py-20">
-      <div class="mb-8 flex justify-between">
-        <div @click="saveNote" class="cursor-pointer group inline-flex items-center transition">
+      <div class="mb-4 flex justify-between">
+        <div @click="saveNote" class="cursor-pointer group inline-flex items-end transition">
           <Icon
             name="streamline-color:send-email-flat"
             size="24"
@@ -111,6 +126,9 @@ const editorRef = ref(null)
 const currentContent = ref({ html: '', text: '' })
 const isSending = ref(false)
 const selectedNotes = ref<number[]>([])
+const isCreatingNew = ref(false)
+
+const { logout, user } = useAuth()
 
 onMounted(async () => {
   await loadNotes()
@@ -139,7 +157,7 @@ const toggleNote = (note: Note) => {
     currentContent.value = { html: '', text: '' }
     activeNote.value = null
   } else {
-    // not selected, clear previous selection and select new note
+    // mark as selected
     selectedNotes.value = [note.id]
 
     // load note into editor
@@ -153,10 +171,11 @@ const loadNote = (note: Note) => {
   activeNote.value = note.id ? note : null
   currentNoteId.value = note.id
   currentNoteContent.value = note.content
-  currentContent.value = { html: note.content, text: note.content }
+  currentContent.value = {
+    html: note.content,
+    text: note.content
+  }
 }
-
-const { logout, user } = useAuth()
 
 const handleLogout = async () => {
   await logout()
@@ -190,19 +209,25 @@ const saveNote = async () => {
     // extract title from first 30 chars
     const title = currentContent.value.text.substring(0, 30) || 'Untitled'
 
+    // send content to server, if currentNoteId exists, update note, otherwise create new note
     const res = await $fetch('/api/notes', {
       method: 'POST',
       body: {
-        content: currentContent.value.text,
+        content: currentContent.value.html,
         id: currentNoteId.value,
         title: title
       }
     })
     if (res?.success) {
       await loadNotes()
+
+      //clear draft note state
+      isCreatingNew.value = false
+
       // update currentNoteId if new note
       if (!currentNoteId.value && res.note?.id) {
         currentNoteId.value = res.note.id
+        selectedNotes.value = [res.note.id]
       }
 
       // reset animation
@@ -229,6 +254,42 @@ const saveNote = async () => {
     })
   }
 }
+
+// create a new note
+const newNote = () => {
+  // clear selections and editor
+  selectedNotes.value = [-1]
+
+  // mark as creating new note to trigger draft note in sidebar
+  isCreatingNew.value = true
+
+  //clear editor
+  activeNote.value = null
+  currentNoteId.value = null
+  currentNoteContent.value = ''
+  currentContent.value = { html: '', text: '' }
+
+  //clear editor content and focus
+  if (editorRef.value) {
+    editorRef.value.clearContent()
+  }
+}
+
+const displayNotes = computed(() => {
+  if (isCreatingNew.value) {
+    // add draft note at top
+    const draftNote: Note = {
+      id: -1, // temporary ID for draft
+      title: currentContent.value.text.substring(0, 30) || 'type new note...',
+      content: currentContent.value.html || '',
+      userId: user.value?.id || 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+    return [draftNote, ...notes.value]
+  }
+  return notes.value
+})
 
 const deleteNote = async () => {
   // if notes are selected, delete them all

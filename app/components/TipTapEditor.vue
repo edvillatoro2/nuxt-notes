@@ -142,6 +142,7 @@ const editor = useEditor({
 
 //watch for content prop changes to update editor content
 watch(
+  // watches currentNoteContent from parent component, which is updated when user selects a different note
   () => props.initialContent,
   (newContent) => {
     if (editor.value && newContent !== editor.value.getHTML()) {

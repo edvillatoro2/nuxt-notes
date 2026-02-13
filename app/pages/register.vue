@@ -29,8 +29,8 @@
       <!-- register form -->
       <div class="flex items-center justify-center relative md:absolute md:top-0 md:left-0 w-full">
         <div class="bg-black flex flex-col items-center p-12 rounded">
-          <h1 class="text-6xl font-bold capitalize">sign up</h1>
-          <h4 class="font-semibold text-lg">for a free account</h4>
+          <h1 class="md:text-6xl text-2xl font-bold capitalize">sign up</h1>
+          <h4 class="font-semibold md:text-lg text-sm">for a free account</h4>
         </div>
       </div>
 
@@ -40,7 +40,9 @@
           <div v-if="emailError" class="bg-red-400 p-2 flex justify-center rounded">
             <p class="text-red-900 font-semibold">{{ emailError }}</p>
           </div>
-          <label for="email" class="block font-medium bg-black p-2">Email Address</label>
+          <label for="email" class="block font-medium bg-black p-2 md:text-base text-sm"
+            >Email Address</label
+          >
           <input
             id="email"
             v-model="email"
@@ -55,7 +57,9 @@
           <div v-if="passwordError" class="bg-red-400 p-2 flex justify-center rounded">
             <p class="text-red-900 font-semibold">{{ passwordError }}</p>
           </div>
-          <label for="password" class="font-medium bg-black p-2">Password</label>
+          <label for="password" class="font-medium bg-black p-2 md:text-base text-sm"
+            >Password</label
+          >
           <input
             id="password"
             v-model="password"
@@ -69,7 +73,7 @@
         <!-- sign up button -->
 
         <button
-          class="bg-[#CF5C36] hover:bg-[#cf5c36b4] hover:cursor-pointer text-white font-bold py-2 px-4 rounded"
+          class="bg-[#CF5C36] hover:bg-[#cf5c36b4] hover:cursor-pointer text-white font-bold py-2 px-4 rounded md:text-base text-sm"
         >
           Sign Up
         </button>
@@ -78,7 +82,7 @@
     <div class="lg:w-3/4 w-full h-full">
       <div class="w-full h-full flex items-center justify-center relative">
         <div
-          class="absolute top-0 right-0 w-40 h-40 rounded-full bg-orange-400 border-4 border-orange-700 flex items-center justify-center shadow-lg rotate-12"
+          class="absolute top-0 right-0 md:w-40 md:h-40 w-28 h-28 rounded-full bg-orange-400 border-4 border-orange-700 flex items-center justify-center shadow-lg rotate-12"
         >
           <div class="text-center">
             <div class="circular-text">
@@ -89,7 +93,7 @@
                     d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"
                   />
                 </defs>
-                <text class="text-[16px] font-bold fill-black uppercase tracking-widest">
+                <text class="md:text-base text-sm font-bold fill-black uppercase tracking-widest">
                   <textPath href="#circlePath" startOffset="0%">
                     already registered? • go to your account •
                   </textPath>
@@ -101,7 +105,7 @@
             <div class="relative z-10">
               <NuxtLink
                 to="/login"
-                class="text-lg font-bold text-green-400 underline hover:text-green-300 uppercase block mt-1"
+                class="md:text-lg text-base font-bold text-green-400 underline hover:text-green-300 uppercase block mt-1"
               >
                 Login
               </NuxtLink>

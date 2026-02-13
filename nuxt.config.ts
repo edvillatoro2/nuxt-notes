@@ -12,11 +12,6 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-
-  // for netlify deployment
-  nitro: {
-    preset: 'netlify'
-  },
   tiptap: {
     prefix: 'Tiptap' //prefix for Tiptap imports, composables not included
   },

@@ -1,11 +1,11 @@
 <template>
-  <div class="flex md:flex-row flex-col-reverse h-screen p-8 gap-8">
+  <div class="flex md:flex-row flex-col-reverse h-screen lg:p-8 lg:gap-8 p-0 gap-0">
     <div
-      class="flex w-full flex-col gap-4 md:w-1/3 p-8 bg-[#464D77]/40 rounded text-white overflow-y-scroll"
+      class="flex w-full flex-col gap-4 md:w-1/3 md:p-8 p-4 bg-[#464D77]/40 rounded text-white overflow-y-scroll"
     >
       <div
         v-gsap.splitText.chars.stagger.from="{ opacity: 0, y: 80 }"
-        class="text-8xl flex justify-center font-bold tracking-widest text-outline text-[#cdcffa]"
+        class="lg:text-8xl hidden lg:flex justify-center font-bold tracking-widest text-outline text-[#cdcffa]"
       >
         Notes
       </div>
@@ -14,24 +14,24 @@
         <!-- New Note Button -->
         <div
           @click="newNote"
-          class="inline-flex items-center justify-center p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#9AFF03] hover:text-[#9AFF03]/80 rounded relative"
+          class="inline-flex items-center justify-center md:text-4xl text-2xl p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#9AFF03] hover:text-[#9AFF03]/80 rounded relative"
         >
-          <Icon name="material-symbols:note-add" size="36" />
+          <Icon name="material-symbols:note-add" />
         </div>
 
         <div
           @click="deleteNote"
-          class="inline-flex items-center justify-center p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#CF5C36] hover:text-[#cf5c36b4] rounded relative"
+          class="inline-flex items-center justify-center md:text-4xl text-2xl p-2 cursor-pointer group transition-all duration-600 ease-out bg-white/0 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[3.1px] hover:bg-white/10 hover:border-white/80 hover:shadow-[0_4px_8px_rgba(0,0,0,0.525)] active:scale-95 text-[#CF5C36] hover:text-[#cf5c36b4] rounded relative"
         >
-          <Icon name="flat-color-icons:full-trash" size="36" />
+          <Icon name="flat-color-icons:full-trash" />
           <span
-            class="absolute top-2.5 left-3 w-7 h-2 bg-[#5A6091] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
+            class="absolute md:top-2.5 top-2 left-3 md:w-7 md:h-2 w-4 h-1.5 bg-[#5A6091] rounded-sm origin-left transition-transform duration-600 group-hover:-rotate-45"
           />
         </div>
       </div>
 
       <div v-for="note in displayNotes" :key="note.id" class="flex flex-col gap-4">
-        <div class="capitalize font-semibold tracking-widest text-4xl">
+        <div class="capitalize font-semibold tracking-tight md:tracking-widest text-xl md:text-4xl">
           <template v-if="note.id === -1"> New Note </template>
           <template v-else>
             <NuxtTime :datetime="note?.updatedAt" relative numeric="auto" relative-style="long" />
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="md:w-2/3 w-full p-8 py-20">
+    <div class="md:w-2/3 w-full md:p-8 md:py-20 p-4">
       <div class="mb-4 flex justify-between">
         <div @click="saveNote" class="cursor-pointer group inline-flex items-end transition">
           <Icon
